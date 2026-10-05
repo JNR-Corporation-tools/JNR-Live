@@ -1,0 +1,6 @@
+# JNR Corporations release protection
+# Change the maintainer handle here if the official GitHub account differs.
+* @Cyber-Yodhas
+/.github/ @Cyber-Yodhas
+/integrity.json @Cyber-Yodhas
+/SECURITY.md @Cyber-Yodhas

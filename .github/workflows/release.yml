@@ -1,0 +1,47 @@
+name: Release package
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Verify integrity
+        run: python verify_integrity.py
+      - name: Build source archive
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          python - <<'PY'
+          import hashlib, os, zipfile
+          from pathlib import Path
+          root = Path('.')
+          tag = os.environ['RELEASE_TAG'].lstrip('v')
+          out = Path(f'Live-Server-JNR-Corporations-v{tag}.zip')
+          skip = {'.git', '.venv', '__pycache__'}
+          with zipfile.ZipFile(out, 'w', zipfile.ZIP_DEFLATED) as zf:
+              for path in root.rglob('*'):
+                  if not path.is_file() or any(part in skip for part in path.parts):
+                      continue
+                  zf.write(path, path.as_posix())
+          digest = hashlib.sha256(out.read_bytes()).hexdigest()
+          Path(str(out) + '.sha256').write_text(digest + '  ' + out.name + '\n', encoding='utf-8')
+          print(out)
+          PY
+      - name: Upload release assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            Live-Server-JNR-Corporations-v*.zip
+            Live-Server-JNR-Corporations-v*.zip.sha256

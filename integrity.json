@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "product": "Live Server",
+  "organization": "JNR Corporations",
+  "release": "2.1.0",
+  "files": {
+    "app.py": "8a4b328dd1ca7e8c93f8a91e7c81ee8e537542e8cbb3a1286047efc5b35783ce",
+    "backend/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "backend/diagnostics.py": "ba64d20f556ffe69071ee0992d2969939431d12e28bbae29f97d4dce9b0925f6",
+    "backend/file_watcher.py": "19dbe115d909fc89fd74b47100aeeec8c7bed034d2abe76d41cf2c307a459249",
+    "backend/integrity.py": "e4416cdefd5df17a3d505905984de698c3ae9d8a8bc83f6995a7a3aaca185280",
+    "backend/network.py": "60220869fc6a38ce67ab9ff1fd929ad16e0c19e476710cd5d195f43571e5185c",
+    "backend/proxy.py": "f95a0cd243d26be83664053ff886e6501561cfc0bc427f08439acd5045122a99",
+    "backend/security.py": "0ba36f7c0976b1d4be0f6903390f2021dddc97300f4d05e2960680d97fd13718",
+    "backend/sessions.py": "a30a5414c6a2b80fc15c80dbb4d0254090aa06a1a94df3e0865740666573136c",
+    "config.py": "07b8ad50e15ddf78158db280c994b9aa943503dcb851b73f3ca39c76a2d9791a",
+    "frontend/app.js": "4735ff142b99a07f83e15506af2b4f8336b0368cc61d38cdf5a09b29f2b179e9",
+    "frontend/index.html": "4beebb60d38c69bcb9c1c4b4ba4780c2c6dc99fde6179784c82e7a8408c5ffde",
+    "frontend/style.css": "cebb2a88a3bff1a0706ea12378d0a0f927684804912b99732955b2ca19603b13",
+    "launcher.py": "95f05242e525a448de184d54b2b83ed941064acd2c396f322ca726d1759bda6e",
+    "requirements.txt": "e9327e6a7d53c195568409935875b91ffdf87eed4767e013457594aba9ea869e"
+  }
+}

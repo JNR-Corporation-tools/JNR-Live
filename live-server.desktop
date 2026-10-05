@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Live Server
+Comment=JNR Corporations Live Server — secure LAN preview for VS Code Live Server
+Exec=/path/to/live-server/run.sh
+Icon=network-workgroup
+Terminal=true
+Type=Application
+Categories=Development;WebDevelopment;
+StartupNotify=true

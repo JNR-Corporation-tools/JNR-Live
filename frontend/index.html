@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="referrer" content="same-origin">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0d1018">
+  <meta name="description" content="Live Server by JNR Corporations — fast cross-platform LAN preview gateway for the real VS Code Live Server.">
+  <link rel="icon" href="/favicon.svg">
+  <title>Live Server — JNR Corporations</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="ambient ambient-a"></div>
+  <div class="ambient ambient-b"></div>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand-block">
+        <div class="brand-mark" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="brand-copy">
+          <strong>Live Server</strong>
+          <span>JNR Corporations</span>
+        </div>
+      </div>
+
+      <div class="workspace-card">
+        <div class="workspace-icon">LS</div>
+        <div>
+          <span>Workspace</span>
+          <strong id="sidebar-project">No project</strong>
+        </div>
+        <span class="workspace-dot" id="sidebar-dot"></span>
+      </div>
+
+      <nav class="nav" aria-label="Main navigation">
+        <p>Workspace</p>
+        <button class="nav-item active" data-view="dashboard"><span class="nav-icon">⌂</span><span>Dashboard</span></button>
+        <button class="nav-item" data-view="preview"><span class="nav-icon">◉</span><span>Live Preview</span></button>
+        <button class="nav-item" data-view="devices"><span class="nav-icon">⌁</span><span>Connected Devices</span><em id="nav-device-count">0</em></button>
+        <button class="nav-item" data-view="projects"><span class="nav-icon">▣</span><span>Projects</span></button>
+        <p>System</p>
+        <button class="nav-item" data-view="settings"><span class="nav-icon">⚙</span><span>Settings</span></button>
+        <button class="nav-item" data-view="logs"><span class="nav-icon">≡</span><span>Diagnostics</span></button>
+        <button class="nav-item" data-view="about"><span class="nav-icon">i</span><span>About</span></button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="creator-card">
+          <span>Built by</span>
+          <strong>Raj Verma</strong>
+          <small>JNR Corporations</small>
+        </div>
+        <div class="secure-chip"><span></span> Local-first · No cloud</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="top-title">
+          <div class="breadcrumb">JNR Corporations <span>/</span> Live Server</div>
+          <h1 id="view-title">Dashboard</h1>
+        </div>
+        <div class="top-actions">
+          <div class="server-pill" id="realtime-status"><span class="status-dot"></span><span>Connecting</span></div>
+          <div class="server-pill" id="global-status"><span class="status-dot"></span><span>Checking</span></div>
+          <button class="icon-btn" id="refresh-btn" title="Refresh status" aria-label="Refresh status">↻</button><button class="icon-btn command-btn" id="command-btn" title="Command palette (Ctrl+K)" aria-label="Open command palette">⌘K</button>
+        </div>
+      </header>
+
+      <section class="view active" id="view-dashboard">
+        <div class="hero-grid">
+          <article class="hero card">
+            <div class="hero-content">
+              <div class="hero-topline"><span class="eyebrow">LAN DEVELOPMENT GATEWAY</span><span class="build-pill">v<span id="build-version">2.1.0</span></span></div>
+              <h2>Your VS Code site,<br><span>live on every screen.</span></h2>
+              <p>Securely bridge the real VS Code Live Server to devices on your local network. No duplicate file server. No cloud account.</p>
+              <div class="hero-actions">
+                <button class="primary" id="start-btn"><span class="btn-icon">↗</span>Start Sharing</button>
+                <button class="secondary" id="stop-btn" disabled>Stop Sharing</button>
+                <button class="ghost" id="test-btn">Test Upstream</button>
+              </div>
+              <div class="hero-meta">
+                <span><i></i> Dashboard stays on localhost</span>
+                <span><i></i> Pairing token protected</span>
+              </div>
+            </div>
+            <div class="hero-visual" aria-hidden="true">
+              <div class="grid-lines"></div>
+              <div class="signal signal-one"></div><div class="signal signal-two"></div><div class="signal signal-three"></div>
+              <div class="core-card"><span class="core-icon">↔</span><strong>Live Bridge</strong><small>VS Code → LAN</small></div>
+            </div>
+          </article>
+
+          <article class="card health-card">
+            <div class="card-title-row"><div><span class="section-kicker">SYSTEM HEALTH</span><h3>Connection state</h3></div><span class="live-badge" id="health-badge">Checking</span></div>
+            <div class="health-stack">
+              <div class="health-row"><span class="health-icon violet">↗</span><div><small>Upstream</small><strong id="health-upstream">127.0.0.1:5500</strong></div><b id="health-upstream-state">—</b></div>
+              <div class="health-row"><span class="health-icon cyan">⌂</span><div><small>LAN interface</small><strong id="health-interface">—</strong></div><b id="health-interface-state">—</b></div>
+              <div class="health-row"><span class="health-icon green">●</span><div><small>Preview listener</small><strong id="health-preview">—</strong></div><b id="health-preview-state">—</b></div>
+            </div>
+            <div class="health-callout" id="health-callout"><strong>Waiting for upstream check.</strong><span>Run a connectivity test before sharing.</span></div><div class="integrity-strip" id="integrity-strip"><span class="integrity-dot"></span><div><strong id="integrity-title">Release integrity</strong><small id="integrity-copy">Checking protected files…</small></div></div>
+          </article>
+        </div>
+
+        <div class="stat-grid">
+          <article class="card metric-card"><span class="metric-icon violet">◉</span><div><small>Preview status</small><strong id="stat-preview">Offline</strong><span id="stat-preview-sub">Listener not started</span></div></article>
+          <article class="card metric-card"><span class="metric-icon cyan">⌁</span><div><small>Active sessions</small><strong id="stat-devices">0</strong><span id="stat-device-sub">0 total sessions</span></div></article>
+          <article class="card metric-card"><span class="metric-icon blue">◷</span><div><small>Share uptime</small><strong id="stat-uptime">—</strong><span>since last start</span></div></article>
+          <article class="card metric-card"><span class="metric-icon green">↯</span><div><small>Watcher</small><strong id="stat-watcher">Ready</strong><span id="stat-watcher-sub">No folder selected</span></div></article>
+        </div>
+
+        <div class="content-grid">
+          <article class="card qr-card">
+            <div class="card-title-row"><div><span class="section-kicker">PAIR A DEVICE</span><h3>Scan to preview</h3></div><span class="tiny-label" id="preview-state">Inactive</span></div>
+            <div class="qr-main">
+              <div class="qr-box"><img id="qr-image" alt="LAN preview QR code" src="" hidden><div id="qr-placeholder"><span>QR</span><small>Start sharing</small></div></div>
+              <div class="qr-details">
+                <div class="url-box"><span>REAL LAN URL</span><code id="preview-url">Start sharing to generate a real URL.</code></div>
+                <div class="button-row"><button class="secondary small" id="copy-btn" disabled>Copy URL</button><button class="primary small" id="open-btn" disabled>Open</button></div>
+                <p class="mini-warning">Same Wi-Fi/LAN required. A private LAN address is not an internet URL.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="card activity-card">
+            <div class="card-title-row"><div><span class="section-kicker">ACTIVITY</span><h3>Recent events</h3></div><button class="text-btn" data-go="logs">View logs →</button></div>
+            <div id="activity-log" class="activity-list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="view-preview">
+        <div class="page-head"><div><span class="eyebrow">LIVE PREVIEW</span><h2>Control the LAN gateway</h2><p>Start the proxy only when you need another device to reach the real VS Code Live Server.</p></div><span class="page-status" id="preview-page-status">Offline</span></div>
+        <div class="card preview-control-card">
+          <div class="preview-control-top"><div><span class="section-kicker">PREVIEW LISTENER</span><h3 id="large-preview-status">Sharing is off</h3><p id="large-preview-copy">The listener is not accepting LAN traffic.</p></div><div class="preview-actions"><button class="primary" id="large-start">Start Sharing</button><button class="secondary" id="large-stop" disabled>Stop Sharing</button></div></div>
+          <div class="large-url"><span>PAIRING URL</span><div><code id="large-preview-url">—</code><button class="icon-btn" id="large-copy" disabled title="Copy URL">⧉</button></div></div>
+          <div class="feature-strip"><div><b>Real upstream</b><span>HTTP methods, redirects, content types and WebSockets pass through to your configured Live Server.</span></div><div><b>Authenticated</b><span>Random pairing token plus browser session tracking protect the preview endpoint.</span></div><div><b>Live updates</b><span>Project changes can trigger CSS refreshes or full-page reloads without replacing your files.</span></div></div>
+        </div>
+      </section>
+
+      <section class="view" id="view-devices">
+        <div class="page-head"><div><span class="eyebrow">CONNECTED DEVICES</span><h2>Browser sessions</h2><p>A session represents a browser context. An IP address is a network observation, not a person identity.</p></div><div class="session-summary"><span><b id="summary-active">0</b> active</span><span><b id="summary-idle">0</b> idle</span><span><b id="summary-revoked">0</b> revoked</span></div></div>
+        <div class="card devices-card">
+          <div class="devices-toolbar"><div><strong>Session registry</strong><span id="session-toolbar-label">0 total</span></div><div class="toolbar-actions"><button class="danger-btn" id="revoke-all">Revoke all</button><button class="secondary small" id="restore-all">Restore all</button></div></div>
+          <div class="filter-row"><button class="filter active" data-filter="all">All</button><button class="filter" data-filter="active">Active</button><button class="filter" data-filter="idle">Idle</button><button class="filter" data-filter="revoked">Revoked</button></div>
+          <div class="table-wrap"><table><thead><tr><th>Status</th><th>Browser</th><th>IP</th><th>Last activity</th><th>Current path</th><th>Action</th></tr></thead><tbody id="devices-body"></tbody></table></div>
+        </div>
+      </section>
+
+      <section class="view" id="view-projects">
+        <div class="page-head"><div><span class="eyebrow">PROJECTS</span><h2>Live reload workspace</h2><p>Point the watcher at the same folder VS Code Live Server serves. Files are observed, never exposed.</p></div></div>
+        <div class="card form-card project-card"><div class="form-banner"><span class="form-icon">▣</span><div><strong>Watcher target</strong><span>Changes are debounced and generated folders are ignored by default.</span></div></div><label>Project root<input id="project-input" placeholder="/home/user/projects/my-site or C:\Projects\my-site"></label><div class="helper">Absolute paths work best. Linux example: <code>/home/user/PlayZa</code> · Windows: <code>C:\Projects\PlayZa</code></div><div class="actions"><button class="primary" id="save-project">Save project</button><button class="secondary" id="toggle-watcher">Toggle watcher</button></div></div>
+      </section>
+
+      <section class="view" id="view-settings">
+        <div class="page-head"><div><span class="eyebrow">SETTINGS</span><h2>Connection controls</h2><p>Upstream targets are restricted to loopback addresses to prevent misuse as a general network proxy.</p></div></div>
+        <div class="settings-layout"><div class="card form-card"><div class="form-title"><span class="section-kicker">NETWORK</span><h3>Bridge configuration</h3><button class="text-btn" id="discover-upstream">Discover local servers →</button></div><div class="settings-grid"><label>Upstream host<input id="host-input" value="127.0.0.1"></label><label>Upstream port<input id="port-input" type="number" min="1" max="65535"></label><label>Preview port<input id="share-port-input" type="number" min="1024" max="65535"></label><label>Network interface<select id="interface-select"></select></label><label>Reload debounce<input id="debounce-input" type="number" min="50" max="2000"><span class="field-hint">Milliseconds</span></label><label class="wide">Ignored paths<input id="ignored-input" placeholder=".git, node_modules, dist"></label></div><div class="actions"><button class="primary" id="save-settings">Save settings</button><button class="secondary" id="settings-test">Test upstream</button></div></div><aside class="card security-panel"><div class="security-mark">✓</div><span class="section-kicker">SECURITY MODEL</span><h3>Local-first by design</h3><p>The dashboard stays on localhost. Sharing is opt-in. Preview traffic reaches only your configured development server.</p><div class="security-items"><span>✓ Random pairing token</span><span>✓ CSRF-protected controls</span><span>✓ No filesystem serving</span><span>✓ No root installation required</span></div></aside></div>
+      </section>
+
+      <section class="view" id="view-logs">
+        <div class="page-head"><div><span class="eyebrow">DIAGNOSTICS</span><h2>Logs & checks</h2><p>Useful runtime events stay in memory and pairing credentials are never written into ordinary log messages.</p></div></div>
+        <div class="card log-card"><div class="log-toolbar"><div><strong>Runtime log</strong><span id="log-count">0 entries</span></div><button class="secondary small" id="reload-logs">Refresh</button></div><pre id="logs-pre" class="logs-pre"></pre></div>
+      </section>
+
+      <section class="view" id="view-about">
+        <div class="about-hero card"><div><span class="eyebrow">JNR CORPORATIONS</span><h2>Live Server</h2><p>A fast cross-platform developer utility that connects the real VS Code Live Server with devices on your local network.</p></div><div class="about-badge"><span>Developer</span><strong>Raj Verma</strong><small id="about-version">Version 2.1.0</small></div></div>
+        <div class="about-grid"><article class="card"><span class="section-kicker">ARCHITECTURE</span><h3>Purpose-built gateway</h3><p>FastAPI + Uvicorn management, authenticated reverse proxying, WebSocket forwarding, QR pairing, session controls and watchdog-based reload notifications.</p></article><article class="card"><span class="section-kicker">PRINCIPLES</span><h3>Secure by default</h3><p>It does not become a generic LAN file server, does not expose the laptop filesystem and does not pretend a private LAN URL is internet-accessible.</p></article><article class="card"><span class="section-kicker">BRAND</span><h3>JNR Corporations</h3><p>Designed and developed by Raj Verma for Windows and Linux local web development workflows.</p></article></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="command-palette" id="command-palette" hidden>
+    <div class="command-backdrop" data-command-close></div>
+    <div class="command-dialog" role="dialog" aria-modal="true" aria-labelledby="command-title">
+      <div class="command-head"><div><span class="section-kicker">QUICK COMMANDS</span><h3 id="command-title">What do you want to do?</h3></div><button class="icon-btn" data-command-close aria-label="Close command palette">×</button></div>
+      <input id="command-input" class="command-input" autocomplete="off" placeholder="Search actions…" aria-label="Search commands">
+      <div id="command-list" class="command-list"></div>
+      <div class="command-foot"><span>Enter to run</span><kbd>Esc</kbd><span>close</span></div>
+    </div>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="/app.js" defer></script>
+</body>
+</html>
